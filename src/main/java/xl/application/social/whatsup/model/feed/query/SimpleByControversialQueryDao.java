@@ -3,6 +3,7 @@ package xl.application.social.whatsup.model.feed.query;
 import org.springframework.stereotype.Component;
 import xl.application.social.whatsup.model.feed.entity.FeedEntry;
 
+import java.time.Instant;
 import java.util.Objects;
 
 @Component
@@ -23,15 +24,18 @@ class ControversialOrder implements Comparable<ControversialOrder> {
 
     private final long id;
     private final double score;
+    private final Instant timestamp;
 
     public ControversialOrder(FeedEntry feedEntry) {
         this.id = feedEntry.getId();
         this.score = calculateScore(feedEntry);
+        this.timestamp = Instant.now();
     }
 
     @Override
     public int compareTo(ControversialOrder other) {
-        return Double.compare(score, other.score);
+        int cmp = Double.compare(score, other.score);
+        return (cmp == 0)? -timestamp.compareTo(other.timestamp) : cmp;
     }
 
     @Override
@@ -50,6 +54,10 @@ class ControversialOrder implements Comparable<ControversialOrder> {
     private double calculateScore(FeedEntry entry) {
         long up = entry.getUpvote();
         long down = entry.getDownvote();
+
+        if (up == 0 || down == 0) {
+            return 0.00;
+        }
 
         long magnitude = up + down;
         double balance = (up > down)?

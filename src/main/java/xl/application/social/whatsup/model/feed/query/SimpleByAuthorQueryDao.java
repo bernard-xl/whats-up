@@ -5,6 +5,7 @@ import xl.application.social.whatsup.model.feed.entity.FeedEntry;
 import xl.application.social.whatsup.util.Page;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,7 +31,7 @@ class SimpleByAuthorQueryDao implements FeedByAuthorQueryDao {
         try {
             lock.lock();
 
-            List<FeedEntry> list = listOf(author);
+            List<FeedEntry> list = mustGetListOf(author);
             list.add(0, entry);
         } finally {
             lock.unlock();
@@ -49,8 +50,10 @@ class SimpleByAuthorQueryDao implements FeedByAuthorQueryDao {
         try {
             lock.lock();
 
-            List<FeedEntry> list = listOf(author);
-            list.remove(entry);
+            List<FeedEntry> list = entries.get(author);
+            if (list != null) {
+                list.remove(entry);
+            }
         } finally {
             lock.unlock();
         }
@@ -69,13 +72,16 @@ class SimpleByAuthorQueryDao implements FeedByAuthorQueryDao {
         Lock lock = readLockOf(author);
         try {
             lock.lock();
-            List<FeedEntry> list = listOf(author);
+            List<FeedEntry> list = entries.get(author);
 
-            int fromIndex = Math.max(offset, list.size());
-            int toIndex = Math.min(offset + count, list.size());
-            List<FeedEntry> result = list.subList(fromIndex, toIndex);
+            if (list != null) {
+                int fromIndex = Math.min(offset, list.size());
+                int toIndex = Math.min(offset + count, list.size());
+                List<FeedEntry> result = list.subList(fromIndex, toIndex);
 
-            return new Page<>(result, list.size(), offset, count);
+                return new Page<>(result, list.size(), offset, count);
+            }
+            return new Page<>(Collections.emptyList(), 0, offset, count);
 
         } finally {
             lock.unlock();
@@ -92,7 +98,7 @@ class SimpleByAuthorQueryDao implements FeedByAuthorQueryDao {
         return rw.readLock();
     }
 
-    private List<FeedEntry> listOf(String author) {
+    private List<FeedEntry> mustGetListOf(String author) {
         return entries.computeIfAbsent(author, ignored -> new ArrayList<>());
     }
 }

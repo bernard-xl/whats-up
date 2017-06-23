@@ -3,6 +3,7 @@ package xl.application.social.whatsup.model.feed.query;
 import org.springframework.stereotype.Component;
 import xl.application.social.whatsup.model.feed.entity.FeedEntry;
 
+import java.time.Instant;
 import java.util.Objects;
 
 @Component
@@ -21,17 +22,20 @@ class SimpleByHotQueryDao extends SimpleMutableOrderQueryDao<HotOrder> {
 
 class HotOrder implements Comparable<HotOrder> {
 
-    private long id;
-    private double score;
+    private final long id;
+    private final double score;
+    private final Instant timestamp;
 
     public HotOrder(FeedEntry entry) {
         id = entry.getId();
         score = calculateScore(entry);
+        timestamp = Instant.now();
     }
 
     @Override
     public int compareTo(HotOrder other) {
-        return Double.compare(score, other.score);
+        int cmp = Double.compare(score, other.score);
+        return (cmp == 0)? -timestamp.compareTo(other.timestamp) : cmp;
     }
 
     @Override
