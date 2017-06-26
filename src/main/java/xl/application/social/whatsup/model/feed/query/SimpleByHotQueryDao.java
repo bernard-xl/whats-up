@@ -34,7 +34,7 @@ class HotOrder implements Comparable<HotOrder> {
 
     @Override
     public int compareTo(HotOrder other) {
-        int cmp = Double.compare(score, other.score);
+        int cmp = Double.compare(other.score, score);
         return (cmp == 0)? -timestamp.compareTo(other.timestamp) : cmp;
     }
 

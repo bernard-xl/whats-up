@@ -43,7 +43,7 @@ class SimpleByNewQueryDao implements FeedByOrderQueryDao {
 
     @Override
     public Page<FeedEntry> list(int offset, int count) {
-        List<FeedEntry> result = entries.descendingSet()
+        List<FeedEntry> result = entries
                 .stream()
                 .skip(offset)
                 .limit(count)

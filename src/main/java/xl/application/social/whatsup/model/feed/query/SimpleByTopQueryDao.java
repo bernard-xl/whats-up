@@ -35,7 +35,7 @@ class TopOrder implements Comparable<TopOrder> {
 
     @Override
     public int compareTo(TopOrder other) {
-        int cmp = Long.compare(upvote, other.upvote);
+        int cmp = Long.compare(other.upvote, upvote);
         return (cmp == 0)? -timestamp.compareTo(other.timestamp) : cmp;
     }
 

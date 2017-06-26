@@ -34,7 +34,7 @@ class ControversialOrder implements Comparable<ControversialOrder> {
 
     @Override
     public int compareTo(ControversialOrder other) {
-        int cmp = Double.compare(score, other.score);
+        int cmp = Double.compare(other.score, score);
         return (cmp == 0)? -timestamp.compareTo(other.timestamp) : cmp;
     }
 

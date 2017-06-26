@@ -1,6 +1,5 @@
 package xl.application.social.whatsup.web.controller;
 
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import xl.application.social.whatsup.model.feed.entity.FeedEntry;
@@ -8,7 +7,6 @@ import xl.application.social.whatsup.model.feed.query.FeedQueryService;
 import xl.application.social.whatsup.model.feed.query.Order;
 import xl.application.social.whatsup.util.Page;
 
-import java.security.Principal;
 import java.util.Optional;
 
 @RestController
