@@ -77,7 +77,7 @@ abstract class SimpleMutableOrderQueryDao<Ordering extends Comparable<Ordering>>
                     .collect(Collectors.toList());
             return new Page<>(result, entries.size(), offset, count);
         } finally {
-            readLock.lock();
+            readLock.unlock();
         }
     }
 
