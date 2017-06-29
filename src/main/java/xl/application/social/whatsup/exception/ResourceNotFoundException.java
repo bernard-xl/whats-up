@@ -6,7 +6,7 @@ public class ResourceNotFoundException extends RuntimeException {
     private final Object id;
 
     public ResourceNotFoundException(String name, Object id) {
-        super(name + "/" + id + " cannot be found");
+        super(name + ":" + id + " cannot be found");
         this.name = name;
         this.id = id;
     }

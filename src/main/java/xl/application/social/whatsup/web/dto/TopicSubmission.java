@@ -1,4 +1,6 @@
-package xl.application.social.whatsup.web;
+package xl.application.social.whatsup.web.dto;
+
+import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -9,13 +11,11 @@ import javax.validation.constraints.Size;
  */
 public class TopicSubmission {
 
-    private static final String URL_PATTERN = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)";
-
     @NotNull
     @Size(min = 5, max = 255)
     private String title;
 
-    @Pattern(regexp = URL_PATTERN, message = "invalid HTTP URL")
+    @Pattern(regexp = "^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\\\?([^#]*))?(#(.*))?")
     private String link;
 
     private TopicSubmission() {
