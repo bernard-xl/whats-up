@@ -11,6 +11,8 @@ public class PaginationCursor {
     private String before;
     private Integer count;
 
+    public static PaginationCursor HEAD = new PaginationCursor(null, null, null);
+
     private PaginationCursor() {
         // for Spring MVC to instantiate this class
     }

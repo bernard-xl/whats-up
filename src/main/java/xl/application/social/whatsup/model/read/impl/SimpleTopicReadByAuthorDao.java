@@ -32,6 +32,8 @@ class SimpleTopicReadByAuthorDao implements TopicReadByAuthorDao {
     public Page<Topic> list(String author, PaginationCursor cursor) {
         ReadLock lock = readLockOf(author);
         try {
+            lock.lock();
+
             List<Topic> list = mustGetListOf(author);
             if (list.isEmpty()) {
                 return new Page<>(Collections.emptyList(), null, null);

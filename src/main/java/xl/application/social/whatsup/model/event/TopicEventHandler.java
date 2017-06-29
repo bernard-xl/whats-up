@@ -30,7 +30,7 @@ class TopicEventHandler {
     }
 
     @EventListener
-    public void handleDeleted(TopicVoted e) {
+    public void handleDeleted(TopicDeleted e) {
         for (TopicReadDao dao : readDao) {
             dao.delete(e.getTopic());
         }

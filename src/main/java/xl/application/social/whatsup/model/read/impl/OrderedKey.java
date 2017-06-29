@@ -3,6 +3,7 @@ package xl.application.social.whatsup.model.read.impl;
 
 import java.nio.ByteBuffer;
 import java.util.Base64;
+import java.util.Objects;
 
 class OrderedKey implements Comparable<OrderedKey> {
 
@@ -13,7 +14,7 @@ class OrderedKey implements Comparable<OrderedKey> {
     public static final OrderedKey MAX = new OrderedKey(Long.MAX_VALUE, Double.MAX_VALUE);
 
     public static String encode(OrderedKey key) {
-        ByteBuffer buff = ByteBuffer.allocate(Long.SIZE * 2);
+        ByteBuffer buff = ByteBuffer.allocate(Long.BYTES * 2);
         buff.putLong(key.id);
         buff.putDouble(key.score);
 
@@ -36,5 +37,19 @@ class OrderedKey implements Comparable<OrderedKey> {
     public int compareTo(OrderedKey other) {
         int cmp = Double.compare(other.score, score);
         return (cmp == 0)? Long.compare(other.id, id) : cmp;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderedKey that = (OrderedKey) o;
+        return id == that.id &&
+                Double.compare(that.score, score) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, score);
     }
 }

@@ -5,7 +5,7 @@ import xl.application.social.whatsup.model.entity.Topic;
 import xl.application.social.whatsup.model.read.ListingOrder;
 
 @Component
-class SimpleTopicReadByControversialDao extends AbstractTopicReadByOrderDao {
+class SimpleTopicReadByControversyDao extends AbstractTopicReadByOrderDao {
 
     @Override
     public ListingOrder getOrder() {
@@ -23,8 +23,8 @@ class SimpleTopicReadByControversialDao extends AbstractTopicReadByOrderDao {
 
         long magnitude = up + down;
         double balance = (up > down)?
-                ((double)up / down) :
-                ((double)down / up);
+                ((double)down / up) :
+                ((double)up / down);
 
         return Math.pow(magnitude, balance);
     }

@@ -30,7 +30,7 @@ class SimpleTopicReadService implements TopicReadService {
                 return dao.list(cursor);
             }
         }
-        throw new ResourceNotFoundException("order", order);
+        throw new ResourceNotFoundException("order", order.name());
     }
 
     @Override

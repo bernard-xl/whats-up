@@ -1,6 +1,6 @@
 package xl.application.social.whatsup.model.read.impl;
 
-import xl.application.social.whatsup.exception.BadArgumentException;
+import xl.application.social.whatsup.exception.ArgumentNotValidException;
 import xl.application.social.whatsup.model.entity.Topic;
 import xl.application.social.whatsup.model.read.TopicReadByOrderDao;
 import xl.application.social.whatsup.util.Page;
@@ -53,18 +53,14 @@ abstract class AbstractTopicReadByOrderDao implements TopicReadByOrderDao {
             }
 
             if (cursor.getBefore().isPresent()) {
-                OrderedKey key = OrderedKey.decode(cursor.getBefore().get());
-                return listBefore(key, count);
+                return listBefore(cursor.getBefore().get(), count);
             }
             else if (cursor.getAfter().isPresent()) {
-                OrderedKey key = OrderedKey.decode(cursor.getAfter().get());
-                return listAfter(key, count);
+                return listAfter(cursor.getAfter().get(), count);
             }
             else {
                 return listDefault(count);
             }
-        } catch (BufferUnderflowException e) {
-            throw new BadArgumentException("pagination", cursor);
         } finally {
             readLock.unlock();
         }
@@ -104,7 +100,7 @@ abstract class AbstractTopicReadByOrderDao implements TopicReadByOrderDao {
         writeLock.lock();
         try {
             OrderedKey key = indices.remove(topic.getId());
-            indices.remove(key);
+            topics.remove(key);
         } finally {
             writeLock.unlock();
         }
@@ -124,33 +120,43 @@ abstract class AbstractTopicReadByOrderDao implements TopicReadByOrderDao {
         return result;
     }
 
-    private Page<Topic> listAfter(OrderedKey key, int count) {
-        List<Topic> contents = topics.subMap(key, false, OrderedKey.MAX, true)
-                .values()
-                .stream()
-                .limit(count)
-                .collect(Collectors.toList());
-        Topic first = contents.get(0);
-        Topic last = contents.get(contents.size() - 1);
+    private Page<Topic> listAfter(String encodedkey, int count) {
+        try {
+            OrderedKey key = OrderedKey.decode(encodedkey);
+            List<Topic> contents = topics.subMap(key, false, OrderedKey.MAX, true)
+                    .values()
+                    .stream()
+                    .limit(count)
+                    .collect(Collectors.toList());
+            Topic first = contents.get(0);
+            Topic last = contents.get(contents.size() - 1);
 
-        Page<Topic> result = new Page<>(contents, tryEncodeNext(last), tryEncodePrev(first));
-        return result;
+            Page<Topic> result = new Page<>(contents, tryEncodeNext(last), tryEncodePrev(first));
+            return result;
+        } catch (BufferUnderflowException | IllegalArgumentException e) {
+            throw new ArgumentNotValidException("after", encodedkey);
+        }
     }
 
-    private Page<Topic> listBefore(OrderedKey key, int count) {
-        List<Topic> contents = topics.subMap(OrderedKey.MIN, true, key, false)
-                .descendingMap()
-                .entrySet()
-                .stream()
-                .limit(count)
-                .sorted((e1, e2) -> e2.getKey().compareTo(e1.getKey()))
-                .map(Entry::getValue)
-                .collect(Collectors.toList());
-        Topic first = contents.get(0);
-        Topic last = contents.get(contents.size() - 1);
+    private Page<Topic> listBefore(String encodedkey, int count) {
+        try {
+            OrderedKey key = OrderedKey.decode(encodedkey);
+            List<Topic> contents = topics.subMap(OrderedKey.MIN, true, key, false)
+                    .descendingMap()
+                    .entrySet()
+                    .stream()
+                    .limit(count)
+                    .sorted((e1, e2) -> e2.getKey().compareTo(e1.getKey()))
+                    .map(Entry::getValue)
+                    .collect(Collectors.toList());
+            Topic first = contents.get(0);
+            Topic last = contents.get(contents.size() - 1);
 
-        Page<Topic> result = new Page<>(contents, tryEncodeNext(last), tryEncodePrev(first));
-        return result;
+            Page<Topic> result = new Page<>(contents, tryEncodeNext(last), tryEncodePrev(first));
+            return result;
+        } catch (BufferUnderflowException | IllegalArgumentException e) {
+            throw new ArgumentNotValidException("before", encodedkey);
+        }
     }
 
     private String tryEncodePrev(Topic topic) {
