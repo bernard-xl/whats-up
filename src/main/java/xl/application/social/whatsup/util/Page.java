@@ -1,44 +1,31 @@
 package xl.application.social.whatsup.util;
 
-import java.util.List;
+import java.util.Collection;
 
-public class Page<Element> {
+/**
+ *  A sublist of of a list of objects, it also contains the cursors for further navigation.
+ */
+public class Page<T> {
 
-    private final List<Element> elements;
+    private final Collection<T> contents;
+    private final String next;
+    private final String previous;
 
-    private final int totalElements;
-
-    private final int totalPages;
-
-    private final boolean isLast;
-
-    private final boolean isFirst;
-
-    public Page(List<Element> elements, int totalElements, int offset, int count) {
-        this.elements = elements;
-        this.totalElements = totalElements;
-        this.totalPages = (totalElements + count - 1) / count;
-        this.isFirst = offset == 0;
-        this.isLast = offset + count >= totalElements;
+    public Page(Collection<T> contents, String next, String previous) {
+        this.contents = contents;
+        this.next = next;
+        this.previous = previous;
     }
 
-    public List<Element> getElements() {
-        return elements;
+    public Collection<T> getContents() {
+        return contents;
     }
 
-    public int getTotalElements() {
-        return totalElements;
+    public String getNext() {
+        return next;
     }
 
-    public int getTotalPages() {
-        return totalPages;
-    }
-
-    public boolean isLast() {
-        return isLast;
-    }
-
-    public boolean isFirst() {
-        return isFirst;
+    public String getPrevious() {
+        return previous;
     }
 }
