@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class SimpleLoginFailureHandler implements AuthenticationFailureHandler {
+/**
+ * Reply HTTP status code 401 (Unauthorized) instead of redirection to homepage.
+ */
+class SimpleLoginFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
             throws IOException, ServletException {

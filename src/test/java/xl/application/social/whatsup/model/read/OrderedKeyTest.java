@@ -1,9 +1,12 @@
-package xl.application.social.whatsup.model.read.impl;
+package xl.application.social.whatsup.model.read;
 
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Test if {@link OrderedKeyTest} can be encoded and decoded properly.
+ */
 public class OrderedKeyTest {
 
     private static final String ENCODED_SAMPLE = "AAAAAAAAABlACR64UeuFHw==";

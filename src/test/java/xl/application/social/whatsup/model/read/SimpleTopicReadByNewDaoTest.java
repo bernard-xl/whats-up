@@ -1,7 +1,8 @@
-package xl.application.social.whatsup.model.read.impl;
+package xl.application.social.whatsup.model.read;
 
 import org.junit.Test;
 import xl.application.social.whatsup.model.entity.Topic;
+import xl.application.social.whatsup.model.entity.Topics;
 import xl.application.social.whatsup.util.PaginationCursor;
 
 import java.util.ArrayList;
@@ -10,15 +11,18 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Test if {@link SimpleTopicReadByNewDao} can sort topics correctly after insert.
+ */
 public class SimpleTopicReadByNewDaoTest {
 
     @Test
-    public void orderByNew() {
+    public void orderedAsExpectedAfterInsert() {
         SimpleTopicReadByNewDao dao = new SimpleTopicReadByNewDao();
         ArrayList<Topic> samples = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            Topic topic = TestUtils.createTopic(i, 0, 0);
+            Topic topic = Topics.get(i, "New Insert " + i);
             dao.insert(topic);
             samples.add(topic);
         }

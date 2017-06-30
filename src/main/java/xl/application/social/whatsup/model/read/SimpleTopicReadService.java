@@ -1,12 +1,8 @@
-package xl.application.social.whatsup.model.read.impl;
+package xl.application.social.whatsup.model.read;
 
 import org.springframework.stereotype.Service;
 import xl.application.social.whatsup.exception.ResourceNotFoundException;
 import xl.application.social.whatsup.model.entity.Topic;
-import xl.application.social.whatsup.model.read.ListingOrder;
-import xl.application.social.whatsup.model.read.TopicReadByAuthorDao;
-import xl.application.social.whatsup.model.read.TopicReadByOrderDao;
-import xl.application.social.whatsup.model.read.TopicReadService;
 import xl.application.social.whatsup.util.Page;
 import xl.application.social.whatsup.util.PaginationCursor;
 

@@ -6,7 +6,11 @@ public class ArgumentNotValidException extends IllegalArgumentException {
     private final Object badValue;
 
     public ArgumentNotValidException(String argumentName, Object badValue) {
-        super("invalid argument supplied for " + argumentName + " (" + badValue + ")");
+        this(argumentName, badValue, null);
+    }
+
+    public ArgumentNotValidException(String argumentName, Object badValue, Throwable cause) {
+        super("invalid argument supplied for " + argumentName + " (" + badValue + ")", cause);
         this.argumentName = argumentName;
         this.badValue = badValue;
     }

@@ -1,8 +1,7 @@
-package xl.application.social.whatsup.model.write.impl;
+package xl.application.social.whatsup.model.write;
 
 import org.springframework.stereotype.Component;
 import xl.application.social.whatsup.model.entity.Topic;
-import xl.application.social.whatsup.model.write.TopicWriteDao;
 
 import java.time.Instant;
 import java.util.Optional;

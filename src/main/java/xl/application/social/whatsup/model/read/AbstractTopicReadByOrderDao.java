@@ -1,17 +1,13 @@
-package xl.application.social.whatsup.model.read.impl;
+package xl.application.social.whatsup.model.read;
 
 import xl.application.social.whatsup.exception.ArgumentNotValidException;
 import xl.application.social.whatsup.model.entity.Topic;
-import xl.application.social.whatsup.model.read.TopicReadByOrderDao;
 import xl.application.social.whatsup.util.Page;
 import xl.application.social.whatsup.util.PaginationCursor;
 
 import java.nio.BufferUnderflowException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
@@ -123,7 +119,7 @@ abstract class AbstractTopicReadByOrderDao implements TopicReadByOrderDao {
     private Page<Topic> listAfter(String encodedkey, int count) {
         try {
             OrderedKey key = OrderedKey.decode(encodedkey);
-            List<Topic> contents = topics.subMap(key, false, OrderedKey.MAX, true)
+            List<Topic> contents = topics.subMap(key, false, OrderedKey.TAIL, true)
                     .values()
                     .stream()
                     .limit(count)
@@ -134,19 +130,19 @@ abstract class AbstractTopicReadByOrderDao implements TopicReadByOrderDao {
             Page<Topic> result = new Page<>(contents, tryEncodeNext(last), tryEncodePrev(first));
             return result;
         } catch (BufferUnderflowException | IllegalArgumentException e) {
-            throw new ArgumentNotValidException("after", encodedkey);
+            throw new ArgumentNotValidException("after", encodedkey, e);
         }
     }
 
     private Page<Topic> listBefore(String encodedkey, int count) {
         try {
             OrderedKey key = OrderedKey.decode(encodedkey);
-            List<Topic> contents = topics.subMap(OrderedKey.MIN, true, key, false)
+            List<Topic> contents = topics.subMap(OrderedKey.HEAD, true, key, false)
                     .descendingMap()
                     .entrySet()
                     .stream()
                     .limit(count)
-                    .sorted((e1, e2) -> e2.getKey().compareTo(e1.getKey()))
+                    .sorted(Comparator.comparing(Entry::getKey))
                     .map(Entry::getValue)
                     .collect(Collectors.toList());
             Topic first = contents.get(0);

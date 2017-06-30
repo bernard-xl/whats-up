@@ -1,8 +1,8 @@
-package xl.application.social.whatsup.model.read.impl;
+package xl.application.social.whatsup.model.read;
 
 import org.springframework.stereotype.Component;
+import xl.application.social.whatsup.exception.ArgumentNotValidException;
 import xl.application.social.whatsup.model.entity.Topic;
-import xl.application.social.whatsup.model.read.TopicReadByAuthorDao;
 import xl.application.social.whatsup.util.Page;
 import xl.application.social.whatsup.util.PaginationCursor;
 
@@ -48,12 +48,10 @@ class SimpleTopicReadByAuthorDao implements TopicReadByAuthorDao {
             }
 
             if (cursor.getBefore().isPresent()) {
-                int offset = Integer.parseInt(cursor.getBefore().get());
-                return listBefore(list, offset, count);
+                return listBefore(list, cursor.getBefore().get(), count);
             }
             else {
-                int offset = cursor.getAfter().map(Integer::parseInt).orElse(0);
-                return listAfter(list, offset, count);
+                return listAfter(list, cursor.getAfter().orElse("0"), count);
             }
         } finally {
             lock.unlock();
@@ -109,25 +107,35 @@ class SimpleTopicReadByAuthorDao implements TopicReadByAuthorDao {
         return topics.computeIfAbsent(author, ignored -> new ArrayList<>());
     }
 
-    private Page<Topic> listAfter(List<Topic> list, int offset, int count) {
-        int fromIndex = Math.max(0, offset);
-        int toIndex = Math.min(list.size(), offset + count);
+    private Page<Topic> listAfter(List<Topic> list, String cursor, int count) {
+        try {
+            int offset = Integer.parseInt(cursor);
+            int fromIndex = Math.max(0, offset);
+            int toIndex = Math.min(list.size(), offset + count);
 
-        List<Topic> contents = list.subList(fromIndex, toIndex);
-        String next = (toIndex < list.size())? Integer.toString(toIndex) : null;
-        String prev = (fromIndex > 0)? Integer.toString(fromIndex) : null;
+            List<Topic> contents = list.subList(fromIndex, toIndex);
+            String next = (toIndex < list.size()) ? Integer.toString(toIndex) : null;
+            String prev = (fromIndex > 0) ? Integer.toString(fromIndex) : null;
 
-        return new Page<>(contents, next, prev);
+            return new Page<>(contents, next, prev);
+        } catch (NumberFormatException e) {
+            throw new ArgumentNotValidException("after", cursor);
+        }
     }
 
-    private Page<Topic> listBefore(List<Topic> list, int offset, int count) {
-        int fromIndex = Math.max(0, offset - count);
-        int toIndex = Math.min(list.size(), offset);
+    private Page<Topic> listBefore(List<Topic> list, String cursor, int count) {
+        try {
+            int offset = Integer.parseInt(cursor);
+            int fromIndex = Math.max(0, offset - count);
+            int toIndex = Math.min(list.size(), offset);
 
-        List<Topic> contents = list.subList(fromIndex, toIndex);
-        String next = (toIndex < list.size())? Integer.toString(toIndex) : null;
-        String prev = (fromIndex > 0)? Integer.toString(fromIndex) : null;
+            List<Topic> contents = list.subList(fromIndex, toIndex);
+            String next = (toIndex < list.size()) ? Integer.toString(toIndex) : null;
+            String prev = (fromIndex > 0) ? Integer.toString(fromIndex) : null;
 
-        return new Page<>(contents, next, prev);
+            return new Page<>(contents, next, prev);
+        } catch (NumberFormatException e) {
+            throw new ArgumentNotValidException("before", cursor);
+        }
     }
 }

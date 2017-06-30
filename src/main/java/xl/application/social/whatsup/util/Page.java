@@ -1,5 +1,8 @@
 package xl.application.social.whatsup.util;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 /**
@@ -11,7 +14,11 @@ public class Page<T> {
     private final String next;
     private final String previous;
 
-    public Page(List<T> contents, String next, String previous) {
+    @JsonCreator
+    public Page(
+            @JsonProperty("contents") List<T> contents,
+            @JsonProperty("next") String next,
+            @JsonProperty("previous") String previous) {
         this.contents = contents;
         this.next = next;
         this.previous = previous;

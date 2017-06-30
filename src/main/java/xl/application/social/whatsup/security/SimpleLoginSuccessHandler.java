@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Return HTTP status code 200 (OK) with username, instead of redirection to home page.
+ */
 class SimpleLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final ObjectMapper mapper;

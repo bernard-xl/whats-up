@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Return HTTP status code 200 (OK), instead of redirection to home page.
+ */
 class SimpleLogoutSuccessHandler implements LogoutSuccessHandler {
 
     @Override

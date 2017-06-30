@@ -1,8 +1,7 @@
-package xl.application.social.whatsup.model.read.impl;
+package xl.application.social.whatsup.model.read;
 
 import org.springframework.stereotype.Component;
 import xl.application.social.whatsup.model.entity.Topic;
-import xl.application.social.whatsup.model.read.ListingOrder;
 
 @Component
 class SimpleTopicReadByControversyDao extends AbstractTopicReadByOrderDao {

@@ -1,5 +1,8 @@
 package xl.application.social.whatsup.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.Instant;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
@@ -18,13 +21,25 @@ public class Topic {
     private final AtomicLong downvote;
 
     public Topic(long id, String title, String link, String author, Instant submissionTime) {
+        this(id, title, link, author, submissionTime, 0, 0);
+    }
+
+    @JsonCreator
+    public Topic(
+            @JsonProperty("id") long id,
+            @JsonProperty("title") String title,
+            @JsonProperty("link") String link,
+            @JsonProperty("author") String author,
+            @JsonProperty("submissionTime") Instant submissionTime,
+            @JsonProperty("upvote") long upvote,
+            @JsonProperty("downvote") long downvote) {
         this.id = id;
         this.title = title;
         this.link = link;
         this.author = author;
         this.submissionTime = submissionTime;
-        this.upvote = new AtomicLong(0);
-        this.downvote = new AtomicLong(0);
+        this.upvote = new AtomicLong(upvote);
+        this.downvote = new AtomicLong(downvote);
     }
 
     public long getId() {

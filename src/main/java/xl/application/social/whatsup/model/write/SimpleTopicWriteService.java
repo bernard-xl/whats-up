@@ -1,4 +1,4 @@
-package xl.application.social.whatsup.model.write.impl;
+package xl.application.social.whatsup.model.write;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -7,8 +7,6 @@ import xl.application.social.whatsup.model.entity.Topic;
 import xl.application.social.whatsup.model.event.TopicDeleted;
 import xl.application.social.whatsup.model.event.TopicSubmitted;
 import xl.application.social.whatsup.model.event.TopicVoted;
-import xl.application.social.whatsup.model.write.TopicWriteDao;
-import xl.application.social.whatsup.model.write.TopicWriteService;
 
 import java.time.Instant;
 
