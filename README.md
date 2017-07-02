@@ -1,5 +1,5 @@
 # What's up
-A Reddit clone (prepared for the Coding challenge, see it in action [here][0])
+A Reddit clone (prepared for the Coding Challenge, see it in action [here][0])
 
 ### Design Overview
 This application is designed with [CQRS][1] principle. The application is seperated into one 'write-side' and multiple 'read-side', 
@@ -20,7 +20,7 @@ The topics are sorted in 4 ways: `Hot`, `Top`, `New`, `Controversy`. The ranking
 ### Authentication
 The user doesn't need to register any account To sign in, just tell the application what's your name, no password is required.
 
-## User Interface
+### User Interface
 This is a very basic single page application (SPA) with some flaws, but it is perfectly usable.
 
 Here are known flaws:
@@ -31,6 +31,9 @@ Here are known flaws:
 
 These flaws are not fixed currently because I believe they are not the main points of assessment. 
 I need to deliver the application as soon as possible.
+
+### Testing
+96% classes / 77% of methods / 84% of lines are covered with unit tests and integration tests.
   
 
 [0]: https://bernard-xl-whatsup.herokuapp.com/
