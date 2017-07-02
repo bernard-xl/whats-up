@@ -70,8 +70,16 @@ public class Topic {
         return downvote.get();
     }
 
+    public long doUpvote() {
+        return upvote.incrementAndGet();
+    }
+
     public long doUpvote(long times) {
         return upvote.addAndGet(times);
+    }
+
+    public long doDownvote() {
+        return downvote.incrementAndGet();
     }
 
     public long doDownvote(long times) {
