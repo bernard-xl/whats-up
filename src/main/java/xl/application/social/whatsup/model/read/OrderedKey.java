@@ -10,9 +10,6 @@ class OrderedKey implements Comparable<OrderedKey> {
     private long id;
     private double score;
 
-    public static final OrderedKey TAIL = new OrderedKey(Long.MIN_VALUE, Double.MIN_VALUE);
-    public static final OrderedKey HEAD = new OrderedKey(Long.MAX_VALUE, Double.MAX_VALUE);
-
     public static String encode(OrderedKey key) {
         ByteBuffer buff = ByteBuffer.allocate(Long.BYTES * 2);
         buff.putLong(key.id);

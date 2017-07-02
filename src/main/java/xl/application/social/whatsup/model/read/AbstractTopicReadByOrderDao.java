@@ -119,7 +119,7 @@ abstract class AbstractTopicReadByOrderDao implements TopicReadByOrderDao {
     private Page<Topic> listAfter(String encodedkey, int count) {
         try {
             OrderedKey key = OrderedKey.decode(encodedkey);
-            List<Topic> contents = topics.subMap(key, false, OrderedKey.TAIL, true)
+            List<Topic> contents = topics.tailMap(key, false)
                     .values()
                     .stream()
                     .limit(count)
@@ -137,8 +137,8 @@ abstract class AbstractTopicReadByOrderDao implements TopicReadByOrderDao {
     private Page<Topic> listBefore(String encodedkey, int count) {
         try {
             OrderedKey key = OrderedKey.decode(encodedkey);
-            List<Topic> contents = topics.subMap(OrderedKey.HEAD, true, key, false)
-                    .descendingMap()
+            List<Topic> contents = topics.descendingMap()
+                    .tailMap(key, false)
                     .entrySet()
                     .stream()
                     .limit(count)
