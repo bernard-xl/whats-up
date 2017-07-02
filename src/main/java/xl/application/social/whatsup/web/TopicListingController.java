@@ -1,9 +1,6 @@
 package xl.application.social.whatsup.web;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import xl.application.social.whatsup.model.entity.Topic;
 import xl.application.social.whatsup.model.read.ListingOrder;
 import xl.application.social.whatsup.model.read.TopicReadService;
@@ -11,6 +8,7 @@ import xl.application.social.whatsup.util.Page;
 import xl.application.social.whatsup.util.PaginationCursor;
 
 @RestController
+@RequestMapping("/listing")
 public class TopicListingController {
 
     private final TopicReadService topics;
