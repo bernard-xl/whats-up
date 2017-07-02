@@ -36,11 +36,16 @@ class SimpleTopicWriteService implements TopicWriteService {
 
     @Override
     public void vote(long id, int direction) {
+        vote(id, direction, 1);
+    }
+
+    @Override
+    public void vote(long id, int direction, int times) {
         Topic topic = dao.find(id).orElseThrow(() -> new ResourceNotFoundException("topic", id));
         if (direction > 0) {
-            topic.doUpvote();
+            topic.doUpvote(times);
         } else if (direction < 0) {
-            topic.doDownvote();
+            topic.doDownvote(times);
         }
         publisher.publishEvent(new TopicVoted(topic));
     }

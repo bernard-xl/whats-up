@@ -70,12 +70,12 @@ public class Topic {
         return downvote.get();
     }
 
-    public long doUpvote() {
-        return upvote.getAndIncrement();
+    public long doUpvote(long times) {
+        return upvote.addAndGet(times);
     }
 
-    public long doDownvote() {
-        return downvote.getAndIncrement();
+    public long doDownvote(long times) {
+        return downvote.addAndGet(times);
     }
 
     @Override

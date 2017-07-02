@@ -13,4 +13,6 @@ public interface TopicWriteService {
     void delete(long id);
 
     void vote(long id, int direction);
+
+    void vote(long id, int direction, int times);
 }

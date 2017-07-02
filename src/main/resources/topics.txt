@@ -1,0 +1,40 @@
+Python illustration by /u/denholmsdead in sticker form.
+CPython recently moved to GitHub -- star the project to bump it up in GitHub's showcase!
+The 21 Best Libraries for Python Programmers
+How do I install modules on Linux Mint / Ubuntu
+Thonny on a Raspberry Pi: using the new Python IDE in Raspbian
+What really annoys me about Django migrations
+Virtual environments, yay or nay?
+Jupyter Notebooks on AWS EC2 in 15 (mostly easy) Steps
+Help with Django Girls blog project?
+Having trouble importing pandas library.
+Building a Real-Time Streaming ETL Pipeline in 20 Minutes
+Sangrenel: a Kafka load testing tool
+Kafka with selective message acknowledgments (kmq) performance & latency
+Upgrade from 0.8.2 to 0.10.2
+Kafka monitoring by Prometheus
+A Kafka stream-processing lib in golang
+Replaced Node - Sync Progress = 0%
+How are maps/lists implemented inside Cassandra?
+Migrating a mongodb collection to a cassandra keyspace
+Why Cassandra is a Better Choice for Realtime Analytics over other Databases.
+Getting started with Apache Cassandra
+cassandra pagination: the difference between driver and CQL
+Instaclustr's Latest Apache Cassandra Webinar - Lessons Learned from Supporting 2,000 Clusters
+Strategies to Maximise Apache Cassandra Availability & Design a High-performing database
+Truncate Keyspace w/o Snapshot
+This is my Kitten. She's 17. We have to let her go tomorrow. We love her very much.
+My cat, Moomoo. Don't be fooled by her cute looks, she's evil ♥
+Harley C. Cat
+9 Awesome Cats That Cost a Fortune
+We have five cats and one likes to go on walks. We decided to make a video! Enjoy!
+Look at this what the cat is doing
+Not An AM Cat!
+BE CAREFUL, YOU MAY DIE FROM LAUGHING TOO HARD
+"Catnip Effects On Cats"
+pretty cute kitty
+Chillin, meow
+New kitten saw herself for the first time
+Startled cat playing
+My dog startled this little kitten
+Cat being spooked by Tent
